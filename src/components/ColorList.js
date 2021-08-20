@@ -1,12 +1,18 @@
-import React, { useState } from "react";
-
+import axios from "axios";
+import React, { useState,useEffect } from "react";
+import axiosWithAuth from '../helpers/axiosWithAuth'
 import Color from './Color';
 import EditMenu from './EditMenu';
 
 const ColorList = (props) => {
   const { colors, editing, toggleEdit, saveEdit, deleteColor } = props;
   const [ editColor, setEditColor] = useState({ color: "", code: { hex: "" }});
-
+  useEffect(()=> {
+    axiosWithAuth()
+    .get("http://localhost:5000/api/colors")
+    .then(res => console.log(res.data))
+    .catch(err => console.log({err}))
+  },[])
   return (
     <div className="colors-wrap">
       <p id="color_title">colors</p>
