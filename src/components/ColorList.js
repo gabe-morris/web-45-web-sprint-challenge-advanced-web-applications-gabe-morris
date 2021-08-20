@@ -5,12 +5,17 @@ import Color from './Color';
 import EditMenu from './EditMenu';
 
 const ColorList = (props) => {
-  const { colors, editing, toggleEdit, saveEdit, deleteColor } = props;
+  const {editing, toggleEdit, saveEdit, deleteColor } = props;
+  const [colors, setColor] = useState([])
   const [ editColor, setEditColor] = useState({ color: "", code: { hex: "" }});
+  
   useEffect(()=> {
     axiosWithAuth()
     .get("http://localhost:5000/api/colors")
-    .then(res => console.log(res.data))
+    .then(res => {
+      setColor(res.data)
+      console.log(res.data)
+    })
     .catch(err => console.log({err}))
   },[])
   return (
